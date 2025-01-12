@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
-  getMovies,
-  searchMovies,
-  getRandomMovie,
-} from "../services/movieService";
+  getTvShows,
+  searchTvShows,
+  getRandomTvShow,
+} from "../services/tvShowsService";
 
 const router = Router();
 
@@ -12,12 +12,12 @@ router.get("/", async (req, res) => {
 
   try {
     const data = query
-      ? await searchMovies(query as string, Number(page))
-      : await getMovies(type as string, Number(page));
+      ? await searchTvShows(query as string, Number(page))
+      : await getTvShows(type as string, Number(page));
 
     res.status(200).json(data);
   } catch (error: unknown) {
-    console.error("Erro na API de filmes:", error);
+    console.error("Erro na API de séries:", error);
     res.status(500).json({
       error: "Erro ao buscar dados da API",
       message: error,
@@ -27,12 +27,12 @@ router.get("/", async (req, res) => {
 
 router.get("/aleatorio", async (req, res) => {
   try {
-    const data = await getRandomMovie();
+    const data = await getRandomTvShow();
     res.status(200).json(data);
   } catch (error: unknown) {
-    console.error("Erro ao buscar filme aleatório:", error);
+    console.error("Erro ao buscar série aleatória:", error);
     res.status(500).json({
-      error: "Erro ao buscar filme aleatório",
+      error: "Erro ao buscar série aleatória",
       message: error,
     });
   }
